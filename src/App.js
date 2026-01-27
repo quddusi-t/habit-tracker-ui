@@ -1,23 +1,12 @@
-import logo from './logo.svg';
-import './App.css';
+import React from 'react';
+import HabitCard from './HabitCard';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div style={{ display: 'flex', flexWrap: 'wrap' }}>
+      <HabitCard title="📚 Learn Programming" initialTime={2700} />
+      <HabitCard title="🇩🇪 Learning German" initialTime={1500} />
+      <HabitCard title="📻 Duolingo Spanish" initialTime={900} />
     </div>
   );
 }
