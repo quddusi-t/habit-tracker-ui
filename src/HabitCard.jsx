@@ -170,6 +170,8 @@ function HabitCard({ habit, onUpdate }) {
             )}
           </div>
 
+          <div className="habit-spacer"></div>
+
           {error && <div className="error-message">{error}</div>}
 
           <div className="habit-buttons">
@@ -213,6 +215,8 @@ function HabitCard({ habit, onUpdate }) {
               </>
             )}
           </div>
+
+          <div className="habit-spacer"></div>
 
           {error && <div className="error-message">{error}</div>}
 
