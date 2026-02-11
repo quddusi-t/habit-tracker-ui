@@ -1,38 +1,131 @@
-.App {
-  text-align: center;
-}
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
+.app-container {
   min-height: 100vh;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  padding: 2rem 1rem;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+    sans-serif;
+}
+
+.app-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 1400px;
+  margin: 0 auto 2rem auto;
+  padding: 0 1rem;
+}
+
+.app-header h1 {
+  color: white;
+  margin: 0;
+  font-size: 2.5rem;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.header-actions {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+
+.btn-create-header {
+  background-color: rgba(255, 255, 255, 0.25);
+  color: white;
+  border: 2px solid white;
+  padding: 0.6rem 1.2rem;
+  border-radius: 6px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: 0.95rem;
+}
+
+.btn-create-header:hover {
+  background-color: rgba(255, 255, 255, 0.35);
+  transform: translateY(-2px);
+}
+
+.btn-logout {
+  background-color: rgba(255, 255, 255, 0.2);
+  color: white;
+  border: 2px solid white;
+  padding: 0.6rem 1.2rem;
+  border-radius: 6px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.btn-logout:hover {
+  background-color: rgba(255, 255, 255, 0.3);
+  transform: translateY(-2px);
+}
+
+.btn-logout:active {
+  transform: translateY(0);
+}
+
+.error-banner {
+  max-width: 1200px;
+  margin: 0 auto 2rem auto;
+  background-color: #ffebee;
+  border-left: 4px solid #c62828;
+  color: #c62828;
+  padding: 1rem;
+  border-radius: 6px;
+  font-weight: 500;
+}
+
+.loading {
+  text-align: center;
+  color: white;
+  font-size: 1.1rem;
+  margin: 2rem 0;
+}
+
+.habits-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  max-width: 1400px;
+  margin: 0 auto;
+  gap: 0;
+}
+
+.empty-state {
+  text-align: center;
+  color: white;
+  padding: 3rem;
+  font-size: 1.2rem;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
+  gap: 1.5rem;
+}
+
+.btn-create-habit {
+  background-color: rgba(255, 255, 255, 0.2);
   color: white;
+  border: 2px solid white;
+  padding: 0.75rem 1.5rem;
+  font-size: 1rem;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
 }
 
-.App-link {
-  color: #61dafb;
+.btn-create-habit:hover {
+  background-color: rgba(255, 255, 255, 0.3);
+  transform: translateY(-2px);
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
+@media (max-width: 768px) {
+  .app-container h1 {
+    font-size: 2rem;
   }
-  to {
-    transform: rotate(360deg);
+
+  .habits-grid {
+    grid-template-columns: 1fr;
   }
 }
