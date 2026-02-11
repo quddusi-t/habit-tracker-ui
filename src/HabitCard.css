@@ -4,6 +4,7 @@
   padding: 1.5rem;
   margin: 1rem;
   width: 280px;
+  min-height: 380px;
   background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   transition: all 0.3s ease;
@@ -54,6 +55,14 @@
   color: #666;
   font-size: 0.9rem;
   font-style: italic;
+  min-height: 2.7em;
+  max-height: 4.5em;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  line-height: 1.5em;
 }
 
 .habit-card.completed {

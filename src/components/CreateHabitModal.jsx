@@ -60,8 +60,10 @@ function CreateHabitModal({ onClose, onSuccess }) {
               value={formData.name}
               onChange={handleChange}
               placeholder="e.g., 📚 Learn Programming"
+              maxLength="50"
               required
             />
+            <small>{formData.name.length}/50 characters</small>
           </div>
 
           <div className="form-group">
@@ -73,7 +75,9 @@ function CreateHabitModal({ onClose, onSuccess }) {
               onChange={handleChange}
               placeholder="What is this habit about?"
               rows="3"
+              maxLength="120"
             />
+            <small>{formData.description?.length || 0}/120 characters</small>
           </div>
 
           <div className="form-group checkbox">

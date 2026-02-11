@@ -8,6 +8,7 @@ function HabitCard({ habit, onUpdate }) {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [completed, setCompleted] = useState(false);
+  const [completedToday, setCompletedToday] = useState(false);
 
   // Fetch active session on mount (only for timer habits)
   useEffect(() => {
@@ -29,6 +30,25 @@ function HabitCard({ habit, onUpdate }) {
     };
 
     fetchActiveSession();
+  }, [habit.id, habit.is_timer]);
+
+  // Check if already completed today (for manual habits)
+  useEffect(() => {
+    if (habit.is_timer) return;
+
+    const checkCompletionStatus = async () => {
+      try {
+        const status = await habitService.getHabitStatus(habit.id);
+        // If status is "completed" or "done", mark as completed today
+        if (status.status === "completed" || status.status === "done") {
+          setCompletedToday(true);
+        }
+      } catch (err) {
+        console.error("Error checking completion status:", err);
+      }
+    };
+
+    checkCompletionStatus();
   }, [habit.id, habit.is_timer]);
 
   // Timer interval (only for timer habits)
@@ -63,7 +83,7 @@ function HabitCard({ habit, onUpdate }) {
     setLoading(true);
     setError(null);
     try {
-      const session = await habitLogService.stopSession(
+      await habitLogService.stopSession(
         habit.id,
         activeSession.id
       );
@@ -79,12 +99,15 @@ function HabitCard({ habit, onUpdate }) {
   };
 
   const handleMarkComplete = async () => {
+    if (completedToday) return; // Prevent double completion
+
     setLoading(true);
     setError(null);
     try {
       await habitService.completeHabit(habit.id);
       setCompleted(true);
-      // Reset after 2 seconds
+      setCompletedToday(true); // Mark as completed today
+      // Reset visual confirmation after 2 seconds, but keep completedToday true
       setTimeout(() => setCompleted(false), 2000);
       if (onUpdate) onUpdate();
     } catch (err) {
@@ -124,9 +147,9 @@ function HabitCard({ habit, onUpdate }) {
         </span>
       </div>
 
-      {habit.description && (
-        <p className="habit-description">{habit.description}</p>
-      )}
+      <p className="habit-description">
+        {habit.description || "\u00A0"}
+      </p>
 
       {habit.is_timer ? (
         // Timer-based habit
@@ -175,9 +198,13 @@ function HabitCard({ habit, onUpdate }) {
         // Manual completion habit
         <>
           <div className="habit-completion">
-            {completed ? (
+            {completedToday ? (
               <>
                 <p className="completion-status">✅ Completed Today!</p>
+              </>
+            ) : completed ? (
+              <>
+                <p className="completion-status">✅ Marked Complete!</p>
               </>
             ) : (
               <>
@@ -192,10 +219,10 @@ function HabitCard({ habit, onUpdate }) {
           <div className="habit-buttons">
             <button
               onClick={handleMarkComplete}
-              disabled={loading || completed}
-              className={`btn ${completed ? "btn-completed" : "btn-complete"}`}
+              disabled={loading || completedToday}
+              className={`btn ${completedToday || completed ? "btn-completed" : "btn-complete"}`}
             >
-              {loading ? "Marking..." : completed ? "✓ Completed" : "Mark Complete"}
+              {loading ? "Marking..." : completedToday ? "✓ Done Today" : completed ? "✓ Completed" : "Mark Complete"}
             </button>
           </div>
         </>

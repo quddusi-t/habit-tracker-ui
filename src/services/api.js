@@ -132,9 +132,11 @@ export const habitLogService = {
     apiCall(`/habit_logs/${habitId}/logs/active`, { method: "GET" }),
 };
 
-export default {
+const apiServices = {
   authService,
   userService,
   habitService,
   habitLogService,
 };
+
+export default apiServices;
