@@ -4,6 +4,7 @@ import { habitService } from "./services/api";
 import HabitCard from "./HabitCard";
 import LoginPage from "./pages/LoginPage";
 import CreateHabitModal from "./components/CreateHabitModal";
+import HabitStatsModal from "./components/HabitStatsModal";
 import "./App.css";
 
 function AppContent() {
@@ -12,6 +13,7 @@ function AppContent() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [showCreateModal, setShowCreateModal] = useState(false);
+  const [statsHabit, setStatsHabit] = useState(null);
 
   useEffect(() => {
     if (!isAuthenticated) return;
@@ -77,7 +79,12 @@ function AppContent() {
 
       <div className="habits-grid">
         {habits.map((habit) => (
-          <HabitCard key={habit.id} habit={habit} onUpdate={() => {}} />
+          <HabitCard
+            key={habit.id}
+            habit={habit}
+            onUpdate={() => {}}
+            onViewStats={() => setStatsHabit(habit)}
+          />
         ))}
       </div>
 
@@ -97,6 +104,13 @@ function AppContent() {
         <CreateHabitModal
           onClose={() => setShowCreateModal(false)}
           onSuccess={handleCreateHabitSuccess}
+        />
+      )}
+
+      {statsHabit && (
+        <HabitStatsModal
+          habit={statsHabit}
+          onClose={() => setStatsHabit(null)}
         />
       )}
     </div>

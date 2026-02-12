@@ -113,6 +113,9 @@ export const habitService = {
 
   getHabitStatus: (id) =>
     apiCall(`/habits/${id}/status`, { method: "GET" }),
+
+  getHabitStats: (id) =>
+    apiCall(`/habits/${id}/stats`, { method: "GET" }),
 };
 
 // ==================== HABIT LOGS ====================

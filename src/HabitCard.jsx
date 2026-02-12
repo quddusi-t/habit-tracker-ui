@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { habitLogService, habitService } from "./services/api";
 import "./HabitCard.css";
 
-function HabitCard({ habit, onUpdate }) {
+function HabitCard({ habit, onUpdate, onViewStats }) {
   const [activeSession, setActiveSession] = useState(null);
   const [elapsedSeconds, setElapsedSeconds] = useState(0);
   const [loading, setLoading] = useState(false);
@@ -117,7 +117,6 @@ function HabitCard({ habit, onUpdate }) {
       setLoading(false);
     }
   };
-
   const formatTime = (seconds) => {
     const hours = Math.floor(seconds / 3600);
     const minutes = Math.floor((seconds % 3600) / 60);
@@ -240,6 +239,15 @@ function HabitCard({ habit, onUpdate }) {
             day: "numeric",
           })}
         </small>
+      </div>
+
+      <div className="habit-stats-toggle">
+        <button
+          onClick={onViewStats}
+          className="btn btn-stats"
+        >
+          View Stats
+        </button>
       </div>
     </div>
   );
