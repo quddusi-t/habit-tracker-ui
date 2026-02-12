@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { habitLogService, habitService } from "./services/api";
+import EditHabitModal from "./components/EditHabitModal";
 import "./HabitCard.css";
 
 function HabitCard({ habit, onUpdate, onViewStats }) {
@@ -9,6 +10,9 @@ function HabitCard({ habit, onUpdate, onViewStats }) {
   const [error, setError] = useState(null);
   const [completed, setCompleted] = useState(false);
   const [completedToday, setCompletedToday] = useState(false);
+  const [editOpen, setEditOpen] = useState(false);
+  const [deleteConfirmOpen, setDeleteConfirmOpen] = useState(false);
+  const [deleting, setDeleting] = useState(false);
 
   // Fetch active session on mount (only for timer habits)
   useEffect(() => {
@@ -115,6 +119,21 @@ function HabitCard({ habit, onUpdate, onViewStats }) {
       console.error("Error completing habit:", err);
     } finally {
       setLoading(false);
+    }
+  };
+
+  const handleDelete = async () => {
+    setDeleting(true);
+    setError(null);
+    try {
+      await habitService.deleteHabit(habit.id);
+      setDeleteConfirmOpen(false);
+      if (onUpdate) onUpdate();
+    } catch (err) {
+      setError(err.message);
+      console.error("Error deleting habit:", err);
+    } finally {
+      setDeleting(false);
     }
   };
   const formatTime = (seconds) => {
@@ -241,14 +260,75 @@ function HabitCard({ habit, onUpdate, onViewStats }) {
         </small>
       </div>
 
-      <div className="habit-stats-toggle">
+      <div className="habit-action-buttons">
         <button
           onClick={onViewStats}
           className="btn btn-stats"
         >
           View Stats
         </button>
+        <button
+          onClick={() => setEditOpen(true)}
+          className="btn btn-edit"
+        >
+          Edit
+        </button>
+        <button
+          onClick={() => setDeleteConfirmOpen(true)}
+          className="btn btn-delete"
+        >
+          Delete
+        </button>
       </div>
+
+      {editOpen && (
+        <EditHabitModal
+          habit={habit}
+          onClose={() => setEditOpen(false)}
+          onSuccess={() => {
+            setEditOpen(false);
+            if (onUpdate) onUpdate();
+          }}
+        />
+      )}
+
+      {deleteConfirmOpen && (
+        <div className="modal-overlay" onClick={() => !deleting && setDeleteConfirmOpen(false)}>
+          <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+            <div className="modal-header">
+              <h2>Delete Habit?</h2>
+              <button className="modal-close" onClick={() => setDeleteConfirmOpen(false)}>
+                ✕
+              </button>
+            </div>
+            <div style={{ padding: "1.5rem" }}>
+              <p>Are you sure you want to delete <strong>{habit.name}</strong>? This action cannot be undone.</p>
+              <div className="form-actions" style={{ marginTop: "1.5rem" }}>
+                <button
+                  type="button"
+                  onClick={() => setDeleteConfirmOpen(false)}
+                  disabled={deleting}
+                  className="btn-cancel"
+                >
+                  Cancel
+                </button>
+                <button
+                  type="button"
+                  onClick={handleDelete}
+                  disabled={deleting}
+                  className="btn-delete"
+                  style={{
+                    background: "#f44336",
+                    color: "white",
+                  }}
+                >
+                  {deleting ? "Deleting..." : "Delete Habit"}
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
