@@ -10,11 +10,11 @@
 
 | Day | Status | Completed | Total |
 |-----|--------|-----------|-------|
-| Day 1 | 🟢 In Progress | 1/5 | 5 tasks |
+| Day 1 | ✅ Complete | 5/5 | 5 tasks |
 | Day 2 | ⏳ Planned | 0/5 | 5 tasks |
 | Day 3 | ⏳ Planned | 0/6 | 6 tasks |
 
-**Last Updated:** Feb 13, 2026 | **Started:** Feb 13, 2026
+**Last Updated:** Feb 13, 2026, 22:35 UTC | **Started:** Feb 13, 2026
 
 ---
 
@@ -35,13 +35,13 @@
   - Call DELETE `/habits/{id}` endpoint
   - Refresh habit list on success
   
-- [ ] Add **Manual Override for Timer Habits**
+- [X] Add **Manual Override for Timer Habits**
   - Button appears only if `allow_manual_override=true`
   - Time picker dialog (hours: 0-23, minutes: 0-59)
   - Submit as manual log entry to backend
   - Show success confirmation
 
-- [ ] **Reorganize Card Buttons** (consistent layout):
+- [X] **Reorganize Card Buttons** (consistent layout):
   ```
   [Mark Complete / START] [View Stats] [Edit] [Delete]
   ```
@@ -49,12 +49,18 @@
   - Consistent sizing and spacing
 
 #### Backend (0.5 hrs)
-- [x] Initialize **2 Freezes per Habit** at creation
+- [X] Initialize **2 Freezes per Habit** at creation
   - ✅ Added `freezes_remaining` field to Habit model (default: 2)
   - ✅ Updated POST `/habits/` to initialize with 2 freezes
   - ✅ Created Alembic migration & applied to database
   - ✅ Updated `use_freeze()` endpoint to decrement per-habit freezes
   - ✅ Updated `get_habit_stats()` to return habit.freezes_remaining
+
+- [X] Implement **Manual Log Creation Endpoint**
+  - ✅ Created `create_manual_log(db, habit_id, duration_min, notes)` in crud.py
+  - ✅ Added `ManualLogCreate` schema for request validation
+  - ✅ POST `/{habit_id}/logs` endpoint returns HabitLog response
+  - ✅ Tested via Swagger - time entry, notes, and streak updates working
 
 ---
 
