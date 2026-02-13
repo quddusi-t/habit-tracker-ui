@@ -110,6 +110,13 @@
 *Focus: Production readiness, deployment configuration, store assets*
 
 #### Frontend (1.5 hrs)
+- [ ] **Undo Mark Complete (60 sec window)**
+  - After "Mark Complete" is clicked, show "Undo" button for 60 seconds
+  - Card stays green during undo window
+  - Click "Undo" reverts to incomplete state, shows "Mark Complete" again
+  - Auto-reverts to normal after 60 seconds expire
+  - Backend: DELETE /habits/{id}/undo-complete endpoint
+
 - [ ] **Environment Configuration**
   - Create `.env.production` with backend API URL
   - Update API service to use `process.env.REACT_APP_API_URL`
@@ -232,14 +239,19 @@
 10. Best streak tracking & display
 11. Habit categories/tags
 12. Settings page (notifications times)
+13. **Flexible Habit Frequency** (Weekly, 3x/Week)
+    - Add `frequency` field: daily (default), weekly (7 days), 3x_weekly (3 days)
+    - Reuse existing "in danger" logic with `next_completion_due` calculation
+    - Keep streak system identical (no backend refactor needed)
+    - UI: Dropdown on Create/Edit habit
 
 ### 🔵 Nice to Have (Post-Launch, Month 2+)
-13. Achievement badges
-14. Dark mode
-15. Completion calendar heatmap
-16. Data export (CSV/PDF)
-17. Habit templates
-18. Custom habit icons
+14. Achievement badges
+15. Dark mode
+16. Completion calendar heatmap
+17. Data export (CSV/PDF)
+18. Habit templates
+19. Custom habit icons
 
 ---
 
