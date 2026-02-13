@@ -17,6 +17,7 @@ function HabitCard({ habit, onUpdate, onViewStats }) {
   const [manualOverrideOpen, setManualOverrideOpen] = useState(false);
   const [habitColor, setHabitColor] = useState(null);
   const [inDanger, setInDanger] = useState(false);
+  const [freezesRemaining, setFreezesRemaining] = useState(2);
 
   // Fetch active session on mount (only for timer habits)
   useEffect(() => {
@@ -55,8 +56,21 @@ function HabitCard({ habit, onUpdate, onViewStats }) {
     }
   };
 
+  // Fetch habit stats (freezes_remaining, etc)
+  const fetchHabitStats = async () => {
+    try {
+      const stats = await habitService.getHabitStats(habit.id);
+      if (stats.freezes && stats.freezes.remaining !== undefined) {
+        setFreezesRemaining(stats.freezes.remaining);
+      }
+    } catch (err) {
+      console.error("Error fetching habit stats:", err);
+    }
+  };
+
   useEffect(() => {
     fetchHabitStatus();
+    fetchHabitStats();
   }, [habit.id]);
 
   // Timer interval (only for timer habits)
@@ -99,6 +113,7 @@ function HabitCard({ habit, onUpdate, onViewStats }) {
       setElapsedSeconds(0);
       // Fetch updated status to reflect completion color
       await fetchHabitStatus();
+      await fetchHabitStats();
       if (onUpdate) onUpdate();
     } catch (err) {
       setError(err.message);
@@ -119,6 +134,7 @@ function HabitCard({ habit, onUpdate, onViewStats }) {
       setCompletedToday(true);
       // Immediately fetch updated status to show green color
       await fetchHabitStatus();
+      await fetchHabitStats();
       // Reset visual confirmation after 2 seconds, but keep completedToday true
       setTimeout(() => setCompleted(false), 2000);
       if (onUpdate) onUpdate();
@@ -170,6 +186,7 @@ function HabitCard({ habit, onUpdate, onViewStats }) {
         <h3>{habit.name}</h3>
         <div className="habit-badges">
           {inDanger && <span className="danger-badge">⚠️ In Danger</span>}
+          <span className="freeze-badge">❄️ {freezesRemaining} freezes</span>
           <span className="streak-badge">
             🔥 {habit.current_streak} day streak
           </span>
@@ -329,6 +346,7 @@ function HabitCard({ habit, onUpdate, onViewStats }) {
             setManualOverrideOpen(false);
             // Fetch updated status to show green color immediately
             await fetchHabitStatus();
+            await fetchHabitStats();
             if (onUpdate) onUpdate();
           }}
         />
