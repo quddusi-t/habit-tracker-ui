@@ -24,12 +24,12 @@
 *Focus: Essential user interactions (Edit, Delete, Manual Override) + backend freeze init*
 
 #### Frontend (2.5 hrs)
-- [ ] Add **Edit Habit Modal** (edit name, description, settings)
+- [X] Add **Edit Habit Modal** (edit name, description, settings)
   - Reuse CreateHabitModal as template
   - Call PATCH `/habits/{id}` endpoint
   - Show success/error feedback
   
-- [ ] Add **Delete Habit Button & Confirmation Dialog**
+- [X] Add **Delete Habit Button & Confirmation Dialog**
   - Red button at bottom of card
   - "Are you sure? This cannot be undone." modal
   - Call DELETE `/habits/{id}` endpoint

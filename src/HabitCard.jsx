@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { habitLogService, habitService } from "./services/api";
 import EditHabitModal from "./components/EditHabitModal";
+import ManualOverrideModal from "./components/ManualOverrideModal";
 import "./HabitCard.css";
 
 function HabitCard({ habit, onUpdate, onViewStats }) {
@@ -13,6 +14,7 @@ function HabitCard({ habit, onUpdate, onViewStats }) {
   const [editOpen, setEditOpen] = useState(false);
   const [deleteConfirmOpen, setDeleteConfirmOpen] = useState(false);
   const [deleting, setDeleting] = useState(false);
+  const [manualOverrideOpen, setManualOverrideOpen] = useState(false);
 
   // Fetch active session on mount (only for timer habits)
   useEffect(() => {
@@ -194,13 +196,23 @@ function HabitCard({ habit, onUpdate, onViewStats }) {
 
           <div className="habit-buttons">
             {!activeSession ? (
-              <button
-                onClick={handleStart}
-                disabled={loading}
-                className="btn btn-start"
-              >
-                {loading ? "Starting..." : "START"}
-              </button>
+              <>
+                <button
+                  onClick={handleStart}
+                  disabled={loading}
+                  className="btn btn-start"
+                >
+                  {loading ? "Starting..." : "START"}
+                </button>
+                {habit.allow_manual_override && (
+                  <button
+                    onClick={() => setManualOverrideOpen(true)}
+                    className="btn btn-override"
+                  >
+                    Manual Entry
+                  </button>
+                )}
+              </>
             ) : (
               <>
                 <button
@@ -210,6 +222,14 @@ function HabitCard({ habit, onUpdate, onViewStats }) {
                 >
                   {loading ? "Stopping..." : "STOP"}
                 </button>
+                {habit.allow_manual_override && (
+                  <button
+                    onClick={() => setManualOverrideOpen(true)}
+                    className="btn btn-override"
+                  >
+                    Manual Entry
+                  </button>
+                )}
               </>
             )}
           </div>
@@ -287,6 +307,17 @@ function HabitCard({ habit, onUpdate, onViewStats }) {
           onClose={() => setEditOpen(false)}
           onSuccess={() => {
             setEditOpen(false);
+            if (onUpdate) onUpdate();
+          }}
+        />
+      )}
+
+      {manualOverrideOpen && habit.allow_manual_override && (
+        <ManualOverrideModal
+          habit={habit}
+          onClose={() => setManualOverrideOpen(false)}
+          onSuccess={() => {
+            setManualOverrideOpen(false);
             if (onUpdate) onUpdate();
           }}
         />

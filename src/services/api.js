@@ -33,8 +33,16 @@ const apiCall = async (endpoint, options = {}) => {
     }
 
     if (!response.ok) {
-      const error = await response.json().catch(() => ({}));
-      throw new Error(error.detail || `API Error: ${response.status}`);
+      let errorMessage = `API Error: ${response.status}`;
+      try {
+        const errorData = await response.json();
+        errorMessage = errorData.detail || errorData.message || errorMessage;
+      } catch (e) {
+        console.error("Could not parse error response:", e);
+      }
+      const err = new Error(errorMessage);
+      err.status = response.status;
+      throw err;
     }
 
     return response.json();
@@ -133,6 +141,16 @@ export const habitLogService = {
 
   getActiveSession: (habitId) =>
     apiCall(`/habit_logs/${habitId}/logs/active`, { method: "GET" }),
+
+  createManualLog: (habitId, durationMinutes, notes = "") =>
+    apiCall(`/habit_logs/${habitId}/logs`, {
+      method: "POST",
+      body: JSON.stringify({
+        duration_min: durationMinutes,
+        is_manual: true,
+        notes: notes,
+      }),
+    }),
 };
 
 const apiServices = {
