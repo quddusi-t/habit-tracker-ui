@@ -11,10 +11,10 @@
 | Day | Status | Completed | Total |
 |-----|--------|-----------|-------|
 | Day 1 | ✅ Complete | 5/5 | 5 tasks |
-| Day 2 | ⏳ Planned | 0/5 | 5 tasks |
+| Day 2 | 🟢 In Progress | 4/5 | 5 tasks |
 | Day 3 | ⏳ Planned | 0/6 | 6 tasks |
 
-**Last Updated:** Feb 13, 2026, 22:35 UTC | **Started:** Feb 13, 2026
+**Last Updated:** Feb 13, 2026, 23:45 UTC | **Started:** Feb 13, 2026
 
 ---
 
@@ -68,7 +68,7 @@
 *Focus: User safety feedback (In Danger colors) + account management*
 
 #### Frontend (2.5 hrs)
-- [ ] **Implement "In Danger" Color System**
+- [X] **Implement "In Danger" Color System**
   - Use `HabitStatus.color` + `HabitStatus.in_danger` from backend
   - Card border glow colors:
     - 🟢 Green: Completed today
@@ -79,11 +79,10 @@
   - Update card CSS classes dynamically
   - Show warning badge "⚠️ In Danger" on card
   
-- [ ] **Usage of Freezes Button** (next to Edit/Delete)
-  - Only show if `freezes.remaining > 0` and `in_danger = true`
-  - Call POST `/habits/{id}/freeze` on click
-  - Show "Freeze used!" confirmation, decrement counter
-  - Disable button if already frozen or no freezes left
+- [X] **Freeze Counter Display**
+  - Show "❄️ X freezes" on all cards (updated dynamically from stats)
+  - Backend auto-consumes freezes on skipped days
+  - Freezes earned automatically at 7 and 14 day streaks (no button needed)
 
 - [ ] **Account Settings Page**
   - New route: `/settings`
@@ -95,9 +94,15 @@
 - [ ] **Settings Navigation Link** (in app header)
 
 #### Backend (0.5 hrs)
-- [ ] Verify `freeze_balance` increments every 7-day streak
-  - Logic should already exist; confirm in tests
-  - No changes needed if working correctly
+- [X] Per-Habit Freeze System Complete
+  - ✅ `freezes_remaining` initialized to 2 on habit creation
+  - ✅ Automatic freeze consumption on missed days (Day 1-2 of skip)
+  - ✅ Day 3 of skip = streak death (no exceptions)
+  - ✅ Freeze earning at 7-day streak (+1, max 2)
+  - ✅ Freeze earning at 14-day streak (+1, max 2)
+  - ✅ All test cases passing (54/54 ✅)
+  - ✅ Removed deprecated user.freeze_balance
+  - ✅ All endpoints return freezes_remaining
 
 ---
 

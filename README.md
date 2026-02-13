@@ -12,15 +12,31 @@ Built with React 19, connects to the [Habit Tracker FastAPI Backend](https://git
 - Secure session management
 
 ✅ **Habit Management**
-- Create habits with customizable settings
+- Create, edit, delete habits with customizable settings
 - View all habits in a responsive dashboard
 - Support for both timer-based and manual tracking
+- Manual time override for timer habits (hours:minutes picker)
 
 ✅ **Timer & Tracking**
 - Real-time session timer for timer-based habits
 - One-click completion for manual habits
 - Automatic session logging to backend
 - Live elapsed time display
+- Manual time entry with notes (for timer habits)
+
+✅ **Streak & Freeze System**
+- Automatic streak tracking (increments daily on completion)
+- Per-habit freeze system: 2 freezes per habit
+- Auto-freeze consumption when skipping days (max 2 day skip)
+- Freeze earning: +1 at 7-day streak, +1 at 14-day streak (max 2)
+- Visual freeze counter on each card
+
+✅ **Smart Status & Vision**
+- Dynamic color-coded cards (green/yellow/orange/red/blue)
+- "In Danger" warning badge when streak at risk
+- Pulsing animation for urgent states
+- Real-time status updates after every action
+- Blinking danger indicator when action needed
 
 ✅ **Beautiful UI**
 - Modern gradient design with purple/violet theme
