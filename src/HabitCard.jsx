@@ -15,6 +15,8 @@ function HabitCard({ habit, onUpdate, onViewStats }) {
   const [deleteConfirmOpen, setDeleteConfirmOpen] = useState(false);
   const [deleting, setDeleting] = useState(false);
   const [manualOverrideOpen, setManualOverrideOpen] = useState(false);
+  const [habitColor, setHabitColor] = useState(null);
+  const [inDanger, setInDanger] = useState(false);
 
   // Fetch active session on mount (only for timer habits)
   useEffect(() => {
@@ -38,24 +40,24 @@ function HabitCard({ habit, onUpdate, onViewStats }) {
     fetchActiveSession();
   }, [habit.id, habit.is_timer]);
 
-  // Check if already completed today (for manual habits)
-  useEffect(() => {
-    if (habit.is_timer) return;
-
-    const checkCompletionStatus = async () => {
-      try {
-        const status = await habitService.getHabitStatus(habit.id);
-        // If status is "completed" or "done", mark as completed today
-        if (status.status === "completed" || status.status === "done") {
-          setCompletedToday(true);
-        }
-      } catch (err) {
-        console.error("Error checking completion status:", err);
+  // Fetch habit status (color, in_danger, completion status)
+  const fetchHabitStatus = async () => {
+    try {
+      const status = await habitService.getHabitStatus(habit.id);
+      setHabitColor(status.color);
+      setInDanger(status.in_danger || false);
+      // If status is "completed" or "done", mark as completed today
+      if (status.status === "completed" || status.status === "done") {
+        setCompletedToday(true);
       }
-    };
+    } catch (err) {
+      console.error("Error fetching habit status:", err);
+    }
+  };
 
-    checkCompletionStatus();
-  }, [habit.id, habit.is_timer]);
+  useEffect(() => {
+    fetchHabitStatus();
+  }, [habit.id]);
 
   // Timer interval (only for timer habits)
   useEffect(() => {
@@ -95,6 +97,8 @@ function HabitCard({ habit, onUpdate, onViewStats }) {
       );
       setActiveSession(null);
       setElapsedSeconds(0);
+      // Fetch updated status to reflect completion color
+      await fetchHabitStatus();
       if (onUpdate) onUpdate();
     } catch (err) {
       setError(err.message);
@@ -112,7 +116,9 @@ function HabitCard({ habit, onUpdate, onViewStats }) {
     try {
       await habitService.completeHabit(habit.id);
       setCompleted(true);
-      setCompletedToday(true); // Mark as completed today
+      setCompletedToday(true);
+      // Immediately fetch updated status to show green color
+      await fetchHabitStatus();
       // Reset visual confirmation after 2 seconds, but keep completedToday true
       setTimeout(() => setCompleted(false), 2000);
       if (onUpdate) onUpdate();
@@ -156,15 +162,18 @@ function HabitCard({ habit, onUpdate, onViewStats }) {
 
   return (
     <div
-      className={`habit-card ${activeSession ? "active" : ""} ${
+      className={`habit-card status-${habitColor || "default"} ${activeSession ? "active" : ""} ${
         habit.current_streak > 0 ? "on-streak" : ""
-      } ${completed ? "completed" : ""}`}
+      } ${completed ? "completed" : ""} ${inDanger ? "in-danger" : ""}`}
     >
       <div className="habit-header">
         <h3>{habit.name}</h3>
-        <span className="streak-badge">
-          🔥 {habit.current_streak} day streak
-        </span>
+        <div className="habit-badges">
+          {inDanger && <span className="danger-badge">⚠️ In Danger</span>}
+          <span className="streak-badge">
+            🔥 {habit.current_streak} day streak
+          </span>
+        </div>
       </div>
 
       <p className="habit-description">
@@ -316,8 +325,10 @@ function HabitCard({ habit, onUpdate, onViewStats }) {
         <ManualOverrideModal
           habit={habit}
           onClose={() => setManualOverrideOpen(false)}
-          onSuccess={() => {
+          onSuccess={async () => {
             setManualOverrideOpen(false);
+            // Fetch updated status to show green color immediately
+            await fetchHabitStatus();
             if (onUpdate) onUpdate();
           }}
         />
