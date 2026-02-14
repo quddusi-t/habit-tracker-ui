@@ -70,13 +70,23 @@ The frontend is now fully integrated with the habit-tracker backend API. This do
 - Auto-closes on successful creation
 - Refreshes habit list after creation
 
-#### 6. **CSS Files**
+#### 7. **`src/pages/SettingsPage.jsx`** - Account Settings Page
+- Account information display (email, creation date)
+- Change password form with current password verification
+- Password strength indicator (weak/fair/good/strong)
+- Delete account with "type DELETE" double-confirmation
+- Logout functionality
+- Uses `userService.updateUser()` for password changes
+- Uses `userService.deleteUser()` for account deletion
+
+#### 8. **CSS Files**
 - `src/App.css` - Main app styling with gradient background, responsive grid
 - `src/HabitCard.css` - Beautiful habit card styling with states (active, on-streak, completed)
 - `src/pages/LoginPage.css` - Login page styling
+- `src/pages/SettingsPage.css` - Settings page with form styling
 - `src/components/CreateHabitModal.css` - Modal styling and form controls
 
-#### 6. **Environment Configuration**
+#### 9. **Environment Configuration**
 - `.env` - Frontend API configuration
 - `.env.example` - Template for environment variables
 
@@ -84,7 +94,12 @@ The frontend is now fully integrated with the habit-tracker backend API. This do
 
 ### Authentication Endpoints
 - `POST /auth/login` - Login with credentials (returns access_token)
-- `POST /users/` - Create new user
+
+### User Endpoints
+- `POST /users/` - Create new user (signup)
+- `GET /users/{id}` - Get user details (email, creation timestamp)
+- `PATCH /users/{id}` - Update user (change password)
+- `DELETE /users/{id}` - Delete account permanently
 
 ### Habit Endpoints
 - `GET /habits/` - Get all habits
@@ -94,7 +109,8 @@ The frontend is now fully integrated with the habit-tracker backend API. This do
 - `DELETE /habits/{id}` - Delete habit
 - `POST /habits/{id}/complete` - Mark as completed for today
 - `POST /habits/{id}/freeze` - Apply streak freeze
-- `GET /habits/{id}/status` - Get daily status
+- `GET /habits/{id}/status` - Get daily status (color, status, streak)
+- `GET /habits/{id}/stats` - Get detailed stats (freezes, timers, streaks)
 
 ### Logging Endpoints (Timer Sessions)
 - `POST /habit_logs/{habit_id}/logs/start` - Start a logging session

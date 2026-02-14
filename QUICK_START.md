@@ -1,8 +1,8 @@
-# Quick Start - Backend Integration Complete ✅
+# Quick Start - Full Frontend Integration ✅
 
 ## What's Been Set Up
 
-Your React habit-tracker-ui is now fully connected to the habit-tracker backend API!
+Your React habit-tracker-ui is now fully connected to the habit-tracker backend API with complete account management!
 
 ### ✅ Completed:
 - [x] API service layer (`src/services/api.js`) with all endpoints
@@ -13,7 +13,11 @@ Your React habit-tracker-ui is now fully connected to the habit-tracker backend 
 - [x] HabitCard with timer-based and manual tracking
 - [x] Real-time timer display with elapsed time
 - [x] Manual completion with "Mark Complete" button
+- [x] Account Settings page (`src/pages/SettingsPage.jsx`)
+- [x] Password change with strength indicator
+- [x] Delete account with double-confirmation
 - [x] Logout functionality
+- [x] 4-color status system (green/yellow/orange/red) + freeze badge
 - [x] Error handling and loading states
 - [x] Beautiful responsive UI styling
 - [x] Environment configuration
@@ -73,6 +77,15 @@ npm start
    - All habits appear in a responsive grid
    - See your current streak on each habit
    - Active timers show elapsed time
+   - Color indicates status: 🟢 green (done), 🟡 yellow (safe), 🟠 orange (urgent), 🔴 red (missed)
+   - ❄️ Freeze counter shows remaining freezes per habit
+
+4. **Manage your account**:
+   - Click "⚙️ Settings" in the app header
+   - View your email address
+   - Change your password with strength indicator
+   - Delete your account (requires typing "DELETE" to confirm)
+   - Click "← Back to Habits" to return to dashboard
 
 ## File Structure
 
@@ -84,20 +97,30 @@ src/
 │   └── AuthContext.jsx (← Auth management)
 ├── pages/
 │   ├── LoginPage.jsx (← Auth page with signup)
-│   └── LoginPage.css
+│   ├── LoginPage.css
+│   ├── SettingsPage.jsx (← Account management)
+│   └── SettingsPage.css
 ├── components/
 │   ├── CreateHabitModal.jsx (← Habit creation form)
-│   └── CreateHabitModal.css
-├── App.js (← Main app with habit dashboard)
+│   ├── CreateHabitModal.css
+│   ├── EditHabitModal.jsx (← Habit editing)
+│   ├── EditHabitModal.css
+│   ├── HabitStatsModal.jsx (← Habit statistics)
+│   ├── HabitStatsModal.css
+│   ├── ManualOverrideModal.jsx (← Manual time entry)
+│   └── ManualOverrideModal.css
+├── App.js (← Main app with habit dashboard + routing)
 ├── App.css
-├── HabitCard.jsx (← Timer + manual tracking)
+├── HabitCard.jsx (← Timer + manual tracking + freeze badge)
 ├── HabitCard.css
-└── ...
+├── index.js
+└── ... (other dependencies)
 .env (← Backend URL configuration)
 .env.example (← Template)
-BACKEND_INTEGRATION.md (← Full documentation)
+BACKEND_INTEGRATION.md (← Full API documentation)
 QUICK_START.md (← This file)
 README.md (← Project overview)
+LAUNCH_ROADMAP.md (← Development roadmap)
 ```
 
 ## Next Features to Implement

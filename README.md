@@ -31,18 +31,18 @@ Built with React 19, connects to the [Habit Tracker FastAPI Backend](https://git
 - Freeze earning: +1 at 7-day streak, +1 at 14-day streak (max 2)
 - Visual freeze counter on each card
 
-✅ **Smart Status & Vision**
-- Dynamic color-coded cards (green/yellow/orange/red/blue)
-- "In Danger" warning badge when streak at risk
-- Pulsing animation for urgent states
+✅ **Smart Status & Colors**
+- Dynamic 4-color coded cards (green/yellow/orange/red)
+- Color progression shows time urgency during the day
+- Completed habits show green regardless of time
+- Separate freeze counter badge (❄️ X freezes) shows actionable danger signal
 - Real-time status updates after every action
-- Blinking danger indicator when action needed
 
-✅ **Beautiful UI**
-- Modern gradient design with purple/violet theme
-- Responsive grid layout
-- Real-time feedback and error handling
-- Smooth animations and transitions
+✅ **Account Management**
+- Account Settings page with email display
+- Change password with strength indicator
+- Delete account with double-confirmation
+- Settings navigation in app header
 
 ## Quick Start
 
