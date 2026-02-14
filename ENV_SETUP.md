@@ -21,44 +21,52 @@ The app will run at `http://localhost:3000` and connect to `http://127.0.0.1:800
 
 ## Production Deployment Setup
 
-**File:** `.env.production`
+**⚠️ IMPORTANT:** Do NOT commit `.env.production` to git. Configure environment variables in Vercel's dashboard instead.
 
-Create React App automatically uses `.env.production` when building for production:
-
-```bash
-npm run build
-```
-
-### Step 1: Get Your Railway Backend URL
+### Step 1: Deploy Backend to Railway
 
 After deploying the backend to Railway, you'll have a URL like:
 ```
 https://habit-tracker-backend-production.up.railway.app
 ```
 
-### Step 2: Update `.env.production`
+### Step 2: Configure Environment Variables in Vercel
 
-Replace the placeholder with your actual Railway backend URL:
+1. Go to your Vercel project dashboard
+2. Navigate to **Settings** → **Environment Variables**
+3. Add a new variable:
+   - **Name:** `REACT_APP_API_URL`
+   - **Value:** `https://habit-tracker-backend-production.up.railway.app`
+   - **Environments:** Select **Production** (and optionally Preview, Development)
+4. Click **Save**
 
-```dotenv
-REACT_APP_API_URL=https://habit-tracker-backend-production.up.railway.app
-```
+### Step 3: Redeploy
 
-### Step 3: Build Production Bundle
-
+Vercel will automatically redeploy your app with the new environment variable. If not, trigger a manual redeploy:
 ```bash
-npm run build
+git commit --allow-empty -m "trigger redeploy with env vars"
+git push origin main
 ```
 
-The production build will embed the `REACT_APP_API_URL` value into the compiled JavaScript.
+### Alternative: Local Production Build Testing
 
-### Step 4: Deploy to Vercel
+If you want to test a production build locally BEFORE deploying to Vercel:
 
-When you deploy to Vercel (via GitHub push), Vercel will:
-1. Run `npm install`
-2. Run `npm run build` (uses `.env.production`)
-3. Deploy the `/build` folder
-4. The app will connect to your Railway backend URL
+1. Create `.env.production` **locally only** (this file is in `.gitignore`)
+2. Add:
+   ```dotenv
+   REACT_APP_API_URL=https://habit-tracker-backend-production.up.railway.app
+   ```
+3. Build:
+   ```bash
+   npm run build
+   ```
+4. Test:
+   ```bash
+   npx serve -s build
+   ```
+
+**Never commit `.env.production` to git.**
 
 ## Environment Variables
 
@@ -103,7 +111,13 @@ npm run build
 serve -s build  # or use any static server
 ```
 
-Then in browser console, verify `process.env.REACT_APP_API_URL` shows your Railway URL.
+Then in browser console:
+```javascript
+// Check ALL XHR/fetch requests in Network tab
+// They should point to your Railway backend URL
+```
+
+**Note:** In production, `process.env.REACT_APP_API_URL` is embedded during build time and won't be visible in console. Check the Network tab instead.
 
 ### Test API Connection
 
@@ -118,9 +132,10 @@ Then in browser console, verify `process.env.REACT_APP_API_URL` shows your Railw
 
 **Problem:** App is trying to fetch from wrong backend URL  
 **Solution:** 
-1. Check that `.env.production` has correct Railway URL
-2. Run `npm run build` again
-3. Verify build output in `/build/static/js/main.*.js` contains your Railway URL
+1. Verify environment variable in Vercel dashboard: Settings → Environment Variables
+2. Check that `REACT_APP_API_URL` is set to your Railway URL
+3. Trigger a redeploy in Vercel to pick up the change
+4. Use Network tab in DevTools to confirm requests go to Railway URL
 
 ### CORS Errors (Backend Needed Fix)
 
@@ -147,12 +162,24 @@ CORS_ORIGINS = ["https://your-vercel-domain.vercel.app"]
 
 ## Next Steps
 
-1. **Backend Deployment** → Deploy backend to Railway
-2. **Get Railway URL** → Note the final backend URL
-3. **Update `.env.production`** → Replace placeholder with real URL
-4. **Build & Deploy** → Push to GitHub, Vercel auto-deploys
+1. **Backend Deployment** → Deploy backend to Railway and note the URL
+2. **Configure Vercel** → Add `REACT_APP_API_URL` in Vercel dashboard Settings → Environment Variables
+3. **Redeploy** → Push to GitHub (or manual redeploy) to apply new env var
+4. **Verify** → Check Network tab that API calls go to Railway URL
 
 After deployment, verify in browser DevTools that:
-- API requests go to correct Railway URL
+- API requests go to correct Railway URL (not localhost)
 - All HABIT_LIST, CREATE, UPDATE, DELETE operations work
 - Auth token is persisted and used correctly
+
+## Security Best Practices
+
+✅ **DO:**
+- Keep `.env` committed (contains example/default values only)
+- Configure sensitive values in hosting provider dashboard (Vercel, Railway)
+- Use `.env.local` for local testing overrides (automatically ignored)
+
+❌ **DON'T:**
+- Commit `.env.production` to git (use Vercel env vars instead)
+- Store API keys or secrets in committed `.env` files
+- Share environment files containing real credentials
