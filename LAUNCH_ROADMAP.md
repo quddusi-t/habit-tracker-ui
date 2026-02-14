@@ -1,7 +1,7 @@
-# Habit Tracker — Google Play Launch Roadmap
+# Habit Tracker — Development Roadmap (Web App)
 
-**Target:** Publish to Google Play Store in 3 days of focused development  
-**Effort:** 3 hours/day (lean, MVP-focused)  
+**Status:** Web app complete and deployed | Google Play submission cancelled  
+**Approach:** Focus on web deployment via Vercel + Railway  
 **Tech Stack:** React (frontend) → Vercel, FastAPI (backend) → Railway
 
 ---
@@ -12,9 +12,11 @@
 |-----|--------|-----------|-------|
 | Day 1 | ✅ Complete | 5/5 | 5 tasks |
 | Day 2 | ✅ Complete | 5/5 | 5 tasks |
-| Day 3 | ⏳ Planned | 0/6 | 6 tasks |
+| Day 3 | ⏳ Paused | 2/6 | Environment config, Mobile testing |
 
-**Last Updated:** Feb 14, 2026, 03:15 UTC | **Started:** Feb 13, 2026
+**Last Updated:** Feb 14, 2026, 11:45 PM UTC  
+**Status:** Web app deployment phase (Google Play cancelled)  
+**Next Focus:** Error Boundary, Timezone fix, Railway deployment
 
 ---
 
@@ -168,31 +170,12 @@
   - Verify all endpoints working
   - Load test (basic)
 
-#### Google Play Store Prep (1 hr)
-- [ ] **Create Google Play Developer Account**
-  - Pay $25 one-time fee
-  - Complete company/identity verification
-  
-- [ ] **Build APK/App Bundle**
-  - Generate signed release build
-  - Create app signing key
-  
-- [ ] **Prepare Store Listing**
-  - App title: "Habit Tracker"
-  - Short description (80 chars)
-  - Full description (4000 chars)
-  - Screenshot 1: Habit list view
-  - Screenshot 2: Timer in action
-  - Screenshot 3: Stats modal
-  - Screenshot 4: Streak counter
-  - Privacy policy URL
-  - Support email
-  - Category: Productivity or Lifestyle
+#### Google Play Store Prep (CANCELLED ❌)
+🚫 **Decision:** Focus on web app instead of mobile app submission  
+**Reason:** Web-only approach simpler to maintain and deploy  
+**Responsive Design:** CSS is mobile-friendly (see MOBILE_TESTING.md), but not pursuing app store distribution  
 
-- [ ] **Submit for Review**
-  - Upload APK/AAB bundle
-  - Submit for review
-  - Expected wait: 24-48 hours for approval
+*Sections below are archived reference - not pursuing mobile app store submission.*
 
 ---
 
