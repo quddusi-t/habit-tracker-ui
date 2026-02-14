@@ -16,7 +16,6 @@ function HabitCard({ habit, onUpdate, onViewStats }) {
   const [deleting, setDeleting] = useState(false);
   const [manualOverrideOpen, setManualOverrideOpen] = useState(false);
   const [habitColor, setHabitColor] = useState(null);
-  const [inDanger, setInDanger] = useState(false);
   const [freezesRemaining, setFreezesRemaining] = useState(2);
 
   // Fetch active session on mount (only for timer habits)
@@ -46,7 +45,6 @@ function HabitCard({ habit, onUpdate, onViewStats }) {
     try {
       const status = await habitService.getHabitStatus(habit.id);
       setHabitColor(status.color);
-      setInDanger(status.in_danger || false);
       // If status is "completed" or "done", mark as completed today
       if (status.status === "completed" || status.status === "done") {
         setCompletedToday(true);
@@ -180,12 +178,11 @@ function HabitCard({ habit, onUpdate, onViewStats }) {
     <div
       className={`habit-card status-${habitColor || "default"} ${activeSession ? "active" : ""} ${
         habit.current_streak > 0 ? "on-streak" : ""
-      } ${completed ? "completed" : ""} ${inDanger ? "in-danger" : ""}`}
+      } ${completed ? "completed" : ""}`}
     >
       <div className="habit-header">
         <h3>{habit.name}</h3>
         <div className="habit-badges">
-          {inDanger && <span className="danger-badge">⚠️ In Danger</span>}
           <span className="freeze-badge">❄️ {freezesRemaining} freezes</span>
           <span className="streak-badge">
             🔥 {habit.current_streak} day streak
