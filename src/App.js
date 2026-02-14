@@ -3,6 +3,7 @@ import { AuthProvider, AuthContext } from "./context/AuthContext";
 import { habitService } from "./services/api";
 import HabitCard from "./HabitCard";
 import LoginPage from "./pages/LoginPage";
+import SettingsPage from "./pages/SettingsPage";
 import CreateHabitModal from "./components/CreateHabitModal";
 import HabitStatsModal from "./components/HabitStatsModal";
 import "./App.css";
@@ -14,6 +15,7 @@ function AppContent() {
   const [error, setError] = useState(null);
   const [showCreateModal, setShowCreateModal] = useState(false);
   const [statsHabit, setStatsHabit] = useState(null);
+  const [currentPage, setCurrentPage] = useState("habits"); // "habits" or "settings"
 
   useEffect(() => {
     if (!isAuthenticated) return;
@@ -55,6 +57,25 @@ function AppContent() {
     return <LoginPage />;
   }
 
+  if (currentPage === "settings") {
+    return (
+      <div className="app-container">
+        <div className="app-header">
+          <h1>📊 Habit Tracker</h1>
+          <div className="header-actions">
+            <button
+              onClick={() => setCurrentPage("habits")}
+              className="btn-logout"
+            >
+              ← Back to Habits
+            </button>
+          </div>
+        </div>
+        <SettingsPage />
+      </div>
+    );
+  }
+
   return (
     <div className="app-container">
       <div className="app-header">
@@ -68,6 +89,12 @@ function AppContent() {
               + New Habit
             </button>
           )}
+          <button
+            onClick={() => setCurrentPage("settings")}
+            className="btn-settings"
+          >
+            ⚙️ Settings
+          </button>
           <button onClick={logout} className="btn-logout">
             Logout
           </button>
