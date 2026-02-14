@@ -317,25 +317,63 @@
 @media (max-width: 768px) {
   .settings-container {
     padding: 1rem 0.5rem;
+    align-items: stretch;
   }
 
   .settings-box {
-    padding: 1.5rem;
+    padding: 1.5rem 1rem;
+    border-radius: 8px;
   }
 
   .settings-box h1 {
-    font-size: 1.4rem;
+    font-size: 1.5rem;
+  }
+
+  .settings-section h2 {
+    font-size: 1.1rem;
+  }
+
+  .form-group input[type="email"],
+  .form-group input[type="password"],
+  .form-group input[type="text"] {
+    font-size: 16px;
   }
 
   .modal-overlay {
     padding: 0.5rem;
   }
 
-  .form-actions {
-    flex-direction: column;
+  .modal-content {
+    border-radius: 8px;
   }
 
+  .modal-close {
+    width: 44px;
+    height: 44px;
+  }
+
+  .form-actions {
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .btn,
   .btn-cancel {
     width: 100%;
+    min-height: 48px;
+  }
+
+  .danger-zone {
+    padding: 1.25rem;
+  }
+}
+
+@media (max-width: 400px) {
+  .settings-box {
+    padding: 1rem 0.75rem;
+  }
+
+  .settings-box h1 {
+    font-size: 1.3rem;
   }
 }
