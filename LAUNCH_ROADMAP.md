@@ -11,10 +11,10 @@
 | Day | Status | Completed | Total |
 |-----|--------|-----------|-------|
 | Day 1 | ✅ Complete | 5/5 | 5 tasks |
-| Day 2 | 🟢 In Progress | 4/5 | 5 tasks |
+| Day 2 | ✅ Complete | 5/5 | 5 tasks |
 | Day 3 | ⏳ Planned | 0/6 | 6 tasks |
 
-**Last Updated:** Feb 13, 2026, 23:45 UTC | **Started:** Feb 13, 2026
+**Last Updated:** Feb 14, 2026, 03:15 UTC | **Started:** Feb 13, 2026
 
 ---
 
@@ -84,14 +84,14 @@
   - Backend auto-consumes freezes on skipped days
   - Freezes earned automatically at 7 and 14 day streaks (no button needed)
 
-- [ ] **Account Settings Page**
+- [X] **Account Settings Page**
   - New route: `/settings`
   - Display current email
   - Change password form (current + new password)
   - Delete account button with double-confirmation
   - Freeze balance display (earned freezes from user level)
 
-- [ ] **Settings Navigation Link** (in app header)
+- [X] **Settings Navigation Link** (in app header)
 
 #### Backend (0.5 hrs)
 - [X] Per-Habit Freeze System Complete
@@ -148,6 +148,13 @@
   - Dark mode consideration (defer if tight on time)
 
 #### Backend (0.5 hrs)
+- [ ] **Fix Timezone Bug** (Deferred from Day 2)
+  - Backend currently uses UTC for all day boundary calculations
+  - Problem: User in EST (-5 hours) sees different calendar day than backend
+  - Solution: Use user's browser local timezone for `get_percent_of_day_elapsed()`
+  - Impact: Fixes color aging (yellow→orange→red transitions) accuracy
+  - Test: Verify habits transition colors at correct local time boundaries
+
 - [ ] **Update CORS** for production domain
   - Add your final Vercel frontend domain to allowed origins
   - Remove localhost restrictions
