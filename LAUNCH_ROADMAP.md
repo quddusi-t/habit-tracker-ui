@@ -110,27 +110,10 @@
 *Focus: Production readiness, deployment configuration, store assets*
 
 #### Frontend (1.5 hrs)
-- [ ] **Undo Mark Complete (60 sec window)**
-  - After "Mark Complete" is clicked, show "Undo" button for 60 seconds
-  - Card stays green during undo window
-  - Click "Undo" reverts to incomplete state, shows "Mark Complete" again
-  - Auto-reverts to normal after 60 seconds expire
-  - Backend: DELETE /habits/{id}/undo-complete endpoint
-
-- [ ] **Environment Configuration**
+- [ ] **Environment Configuration** (HIGH PRIORITY)
   - Create `.env.production` with backend API URL
   - Update API service to use `process.env.REACT_APP_API_URL`
   - Test against production backend URL
-  
-- [ ] **Error Boundary Component**
-  - Wrap app in error boundary
-  - Display friendly error messages
-  - Add "Report Bug" button
-  
-- [ ] **Loading Placeholders (Skeleton Screens)**
-  - Habit card skeleton during load
-  - Stats modal skeleton during fetch
-  - Smoother perceived performance
 
 - [ ] **Mobile Testing & Tweaks**
   - Test on iPhone Safari (iOS)
@@ -138,34 +121,48 @@
   - Fix any layout breakage
   - Verify touch interactions (no hover-only features)
 
-- [ ] **Create PWA Manifest** (mobile install support)
+- [ ] **Error Boundary Component**
+  - Wrap app in error boundary
+  - Display friendly error messages
+  - Add "Report Bug" button
+
+- [ ] **Undo Mark Complete (60 sec window)** (NICE-TO-HAVE)
+  - After "Mark Complete" is clicked, show "Undo" button for 60 seconds
+  - Card stays green during undo window
+  - Click "Undo" reverts to incomplete state, shows "Mark Complete" again
+  - Auto-reverts to normal after 60 seconds expire
+  - Backend: DELETE /habits/{id}/undo-complete endpoint
+  
+- [ ] **Loading Placeholders (Skeleton Screens)** (POLISH)
+  - Habit card skeleton during load
+  - Stats modal skeleton during fetch
+  - Smoother perceived performance
+
+- [ ] **Create PWA Manifest** (POLISH)
   - `public/manifest.json` (update icons, name, theme color)
   - Add to home screen capability
 
-- [ ] **Final UI Polish**
+- [ ] **Final UI Polish** (POLISH)
   - Consistent spacing across all components
   - Accessibility: ARIA labels, keyboard navigation
   - Dark mode consideration (defer if tight on time)
 
 #### Backend (0.5 hrs)
-- [ ] **Fix Timezone Bug** (Deferred from Day 2)
+- [ ] **Fix Timezone Bug** (HIGH PRIORITY - Deferred from Day 2)
   - Backend currently uses UTC for all day boundary calculations
   - Problem: User in EST (-5 hours) sees different calendar day than backend
   - Solution: Use user's browser local timezone for `get_percent_of_day_elapsed()`
   - Impact: Fixes color aging (yellow→orange→red transitions) accuracy
   - Test: Verify habits transition colors at correct local time boundaries
 
-- [ ] **Update CORS** for production domain
+- [ ] **Update CORS & Environment Variables** (DEPLOYMENT)
   - Add your final Vercel frontend domain to allowed origins
   - Remove localhost restrictions
-  
-- [ ] **Environment Variables**
-  - Database URL (managed by Railway)
-  - JWT secret (strong, random)
-  - CORS domain configuration
-  - API documentation URL
+  - Set DATABASE_URL (managed by Railway)
+  - Set JWT secret (strong, random)
+  - Configure CORS domain configuration
 
-- [ ] **Deploy to Railway** (free tier)
+- [ ] **Deploy to Railway** (SHIP IT)
   - Connect GitHub repo
   - Set environment variables
   - Verify all endpoints working
