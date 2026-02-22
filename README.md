@@ -74,6 +74,42 @@ The app opens at http://localhost:3000
 - Click START/STOP for timers, or Mark Complete for manual habits
 - Watch your streak grow! 🔥
 
+## Screenshots
+
+### 📊 Habit Dashboard
+**Dashboard showing all 5 habits with 4-color status system:**
+- 🟢 **Green** (Completed): Morning Meditation, Read for 30 Mins — ready to start or already completed
+- 🟡 **Yellow** (Safe): Workout (Gym) — on track with active 7-day streak
+- 🟠 **Orange** (Urgent): Drink Water — 1 miss in recent days, approaching danger
+- 🔴 **Red** (In Danger): Journal Entry — missed 2 consecutive days, needs immediate action
+- ❄️ Freeze badges show available freezes per habit
+- Timer display shows real-time session tracking
+
+### ✏️ Edit Habit Modal
+**Customize habit settings with:**
+- Habit name and description editor
+- Timer toggle (timer-based vs instant completion)
+- Manual override permission
+- Freeze availability control
+- Danger zone threshold adjustment (% of day at which status turns red)
+- Settings persist to backend with Save Changes
+
+### 📈 Habit Stats Modal
+**Deep analytics for individual habits:**
+- **Overview**: Habit type, days since creation, current streak
+- **Streaks**: Current active streak, personal best
+- **Freezes**: Freezes used and remaining
+- **Manual Metrics**: Total completions, completion rate, best streak achieved
+- Provides insights into habit reliability and performance
+
+### ⚙️ Settings Page
+**Account management and security:**
+- **Account Information**: Email display (read-only for security)
+- **Change Password**: Strength validator requires 8+ chars
+- **Delete Account**: Double-confirmation to prevent accidental deletion
+- **Danger Zone**: Permanent account deletion warning
+- **Logout**: Quick exit from app
+
 ## Project Structure
 
 See [QUICK_START.md](./QUICK_START.md) for detailed project structure and [BACKEND_INTEGRATION.md](./BACKEND_INTEGRATION.md) for API documentation.
