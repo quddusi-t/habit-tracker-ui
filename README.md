@@ -85,6 +85,10 @@ The app opens at http://localhost:3000
 - ❄️ Freeze badges show available freezes per habit
 - Timer display shows real-time session tracking
 
+![Habit Dashboard](./public/screenshots/1-dashboard.png)
+
+---
+
 ### ✏️ Edit Habit Modal
 **Customize habit settings with:**
 - Habit name and description editor
@@ -94,6 +98,10 @@ The app opens at http://localhost:3000
 - Danger zone threshold adjustment (% of day at which status turns red)
 - Settings persist to backend with Save Changes
 
+![Edit Habit Modal](./public/screenshots/2-edit-modal.png)
+
+---
+
 ### 📈 Habit Stats Modal
 **Deep analytics for individual habits:**
 - **Overview**: Habit type, days since creation, current streak
@@ -102,6 +110,10 @@ The app opens at http://localhost:3000
 - **Manual Metrics**: Total completions, completion rate, best streak achieved
 - Provides insights into habit reliability and performance
 
+![Habit Stats Modal](./public/screenshots/3-stats-modal.png)
+
+---
+
 ### ⚙️ Settings Page
 **Account management and security:**
 - **Account Information**: Email display (read-only for security)
@@ -109,6 +121,8 @@ The app opens at http://localhost:3000
 - **Delete Account**: Double-confirmation to prevent accidental deletion
 - **Danger Zone**: Permanent account deletion warning
 - **Logout**: Quick exit from app
+
+![Settings Page](./public/screenshots/4-settings-page.png)
 
 ## Project Structure
 
